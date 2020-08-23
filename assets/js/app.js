@@ -6,9 +6,24 @@
  */
 
 // any CSS you import will output into a single css file (app.css in this case)
-import '../css/app.css';
+//import '../css/app.css';
 
-// Need jQuery? Install it with "yarn add jquery", then uncomment to import it.
-// import $ from 'jquery';
+//https://bulma.io/documentation/components/navbar/
 
-console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
+document.addEventListener('DOMContentLoaded', () => {
+    const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+    
+    if ($navbarBurgers.length > 0) {
+      $navbarBurgers.forEach(el => {
+        el.addEventListener('click', () => {
+  
+          const target = el.dataset.target;
+          const $target = document.getElementById(target);
+  
+          el.classList.toggle('is-active');
+          $target.classList.toggle('is-active');
+  
+        });
+      });
+    }
+  });
