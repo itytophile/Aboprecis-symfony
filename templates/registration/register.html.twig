@@ -6,10 +6,6 @@
 {% block body %}
 	<section class="section">
 		<div class="container">
-			{% for flashError in app.flashes('verify_email_error') %}
-				<div class="alert alert-danger" role="alert">{{ flashError }}</div>
-            {% endfor %}
-
 			{{ form_start(registrationForm) }}
 			<div class="field">
 				<div class="control has-icons-left">
@@ -32,6 +28,9 @@
 					<input type="submit" class="button is-link is-outlined" value="Register!">
 				</div>
 			</div>
+			{% for error in errors %}
+				<div class="notification is-danger">{{ error.message }}.</div>
+			{% endfor %}
 			{{ form_end(registrationForm) }}
 		</div>
 	</section>
