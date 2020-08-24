@@ -1,39 +1,42 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
-
-{% block body %}
-<section class="section">
-    <div class="container">
-        {% for flashError in app.flashes('verify_email_error') %}
-        <div class="alert alert-danger" role="alert">{{ flashError }}</div>
-        {% endfor %}
-
-        {{ form_start(registrationForm) }}
-        <div class="field">
-            <div class="control has-icons-left">
-                {{ form_widget(registrationForm.username, {'attr': {'class': 'input', 'autocomplete': 'off', 'placeholder': 'Username'} } ) }}
-                <span class="icon is-small is-left">
-                    <i class="fab fa-accessible-icon"></i>
-                </span>
-            </div>
-        </div>
-        <div class="field">
-            <div class="control has-icons-left">
-                {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'input', 'placeholder': 'Password'}}) }}
-                <span class="icon is-small is-left">
-                    <i class="fas fa-lock"></i>
-                </span>
-            </div>
-        </div>
-        <div class="field">
-            <div class="control">
-                <input type="submit" class="button is-link is-outlined" value="Register!">
-            </div>
-        </div>
-        {{ form_end(registrationForm) }}
-    </div>
-</section>
+{% block title %}Register
 {% endblock %}
 
-{% block buttons %} {% include "loginButton.html.twig" %} {% endblock %}
+{% block body %}
+	<section class="section">
+		<div class="container">
+			{% for flashError in app.flashes('verify_email_error') %}
+				<div class="alert alert-danger" role="alert">{{ flashError }}</div>
+            {% endfor %}
+
+			{{ form_start(registrationForm) }}
+			<div class="field">
+				<div class="control has-icons-left">
+					{{ form_widget(registrationForm.username, {'attr': {'class': 'input', 'autocomplete': 'off', 'placeholder': 'Username'} } ) }}
+					<span class="icon is-small is-left">
+						<i class="fab fa-accessible-icon"></i>
+					</span>
+				</div>
+			</div>
+			<div class="field">
+				<div class="control has-icons-left">
+					{{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'input', 'placeholder': 'Password'}}) }}
+					<span class="icon is-small is-left">
+						<i class="fas fa-lock"></i>
+					</span>
+				</div>
+			</div>
+			<div class="field">
+				<div class="control">
+					<input type="submit" class="button is-link is-outlined" value="Register!">
+				</div>
+			</div>
+			{{ form_end(registrationForm) }}
+		</div>
+	</section>
+{% endblock %}
+
+{% block buttons %}
+	{% include "loginButton.html.twig" %}
+{% endblock %}

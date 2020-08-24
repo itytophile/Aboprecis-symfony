@@ -4,58 +4,59 @@
 {% endblock %}
 
 {% block body %}
-<section class="section">
-    <div class="container">
-        <form method="post">
-            {% if error %}
-            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-            {% endif %}
+	<section class="section">
+		<div class="container">
+			<form method="post">
+				<div class="field">
+					<div class="control has-icons-left">
+						<input type="text" value="{{ last_username }}" name="username" class="input" placeholder="Username" autocomplete="off" required>
+						<span class="icon is-small is-left">
+							<i class="fab fa-accessible-icon"></i>
+						</span>
+					</div>
+				</div>
+				<div class="field">
+					<div class="control has-icons-left">
+						<input type="password" name="password" class="input" placeholder="Password" required>
+						<span class="icon is-small is-left">
+							<i class="fas fa-lock"></i>
+						</span>
+					</div>
+				</div>
+				<input
+				type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-            {% if app.user %}
-            <div class="mb-3">
-                You are logged in as
-                {{ app.user.username }},
-                <a href="{{ path('app_logout') }}">Logout</a>
-            </div>
-            {% endif %}
-            <div class="field">
-                <div class="control has-icons-left">
-                    <input type="text" value="{{ last_username }}" name="username" class="input" placeholder="Username"
-                        autocomplete="off" required>
-                    <span class="icon is-small is-left">
-                        <i class="fab fa-accessible-icon"></i>
-                    </span>
-                </div>
-            </div>
-            <div class="field">
-                <div class="control has-icons-left">
-                    <input type="password" name="password" class="input" placeholder="Password" required>
-                    <span class="icon is-small is-left">
-                        <i class="fas fa-lock"></i>
-                    </span>
-                </div>
-            </div>
-            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+				{#
+				                    Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+				                    See https://symfony.com/doc/current/security/remember_me.html
+				            
+				                    <div class="checkbox mb-3">
+				                        <label>
+				                            <input type="checkbox" name="_remember_me"> Remember me
+				                        </label>
+				                    </div>
+				                #}
 
-            {#
-                    Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-                    See https://symfony.com/doc/current/security/remember_me.html
-            
-                    <div class="checkbox mb-3">
-                        <label>
-                            <input type="checkbox" name="_remember_me"> Remember me
-                        </label>
-                    </div>
-                #}
-
-                <div class="field">
-                    <div class="control">
-                        <input type="submit" class="button is-link is-outlined" value="Log In!">
-                    </div>
+				<div class="field">
+					<div class="control">
+						<input type="submit" class="button is-link is-outlined" value="Log In!">
+					</div>
                 </div>
-        </form>
-    </div>
-</section>
+                {% if app.user %}
+					<div class="notification is-warning">
+						You are logged in as
+						{{ app.user.username }},
+						<a href="{{ path('app_logout') }}">Logout</a>
+					</div>
+				{% endif %}
+				{% if error %}
+					<div class="notification is-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+				{% endif %}
+			</form>
+		</div>
+	</section>
 {% endblock %}
 
-{% block buttons %} {% include "registerButton.html.twig" %} {% endblock %}
+{% block buttons %}
+	{% include "registerButton.html.twig" %}
+{% endblock %}
