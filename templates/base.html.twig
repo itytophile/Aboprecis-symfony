@@ -1,38 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>{% block title %}Aboprecis!{% endblock %}</title>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
-        <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
-    </head>
-    <body>
-        <nav class="navbar has-shadow" aria-label="main navigation">
-            <div class="navbar-brand">
-                <a class="navbar-item" href="{{ path('root') }}"><strong>Aboprecis</strong></a>
-                <a class="navbar-burger burger" role="button" aria-label="menu" aria-expanded="false" data-target="menu">
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                </a>
-            </div>
-            <div class="navbar-menu" id="menu">
-                <div class="navbar-end">
-                    <div class="navbar-item">
-                        <div class="buttons">
-                            {% block buttons %}
-                            {% include('loginButton.html.twig') %}
-                            {% include('registerButton.html.twig') %}
-                            {% endblock %}
-                        </div>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Aboprecis!{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+</head>
+
+<body>
+    <nav class="navbar has-shadow" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="{{ path('root') }}"><strong>Aboprecis</strong></a>
+            <a class="navbar-burger burger" role="button" aria-label="menu" aria-expanded="false" data-target="menu">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+        <div class="navbar-menu" id="menu">
+            <div class="navbar-end">
+                <div class="navbar-item">
+                    <div class="buttons">
+                        {% block buttons %}
+                        {% include('loginButton.html.twig') %}
+                        {% include('registerButton.html.twig') %}
+                        {% endblock %}
                     </div>
                 </div>
             </div>
-        </nav>
-        {% block body %}{% endblock %}
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
-    </body>
+        </div>
+    </nav>
+    {% block body %}{% endblock %}
+    {% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+</body>
+
 </html>
