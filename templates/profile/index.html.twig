@@ -1,20 +1,33 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ProfileController!{% endblock %}
+{% block title %}Profile{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/home/ityt/Documents/symfony/Aboprecis-symfony/src/Controller/ProfileController.php'|file_link(0) }}">src/Controller/ProfileController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/home/ityt/Documents/symfony/Aboprecis-symfony/templates/profile/index.html.twig'|file_link(0) }}">templates/profile/index.html.twig</a></code></li>
-    </ul>
-</div>
+    <section class="section">
+        <div class="container has-text-centered">
+            <a class="button is-success" href="/profile/new">
+            <span class="icon is-small"><i class="fas fa-plus"></i></span>
+            <span>Add a new sub</span>
+            </a>
+        </div>
+    </section>
+    <section class="section">
+        {% for sub in subs %}
+            <div class="content">
+                <div class="card">
+                    <header class="card-header">
+                        <p class="card-header-title">
+                            <a>{{ sub.getChannel() }}</a>
+                        </p>
+                    </header>
+                    <div class="card-content">
+                        <div class="content">{{ sub.getKeywords() }}</div>
+                    </div>
+                    <footer class="card-footer">
+                        <a class="card-footer-item">Delete</a>
+                    </footer>
+                </div>
+            </div>
+        {% endfor %}
+    </section>
 {% endblock %}
