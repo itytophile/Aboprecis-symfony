@@ -6,6 +6,7 @@ Setup (alpha):
 $ composer install
 $ yarn install
 $ php bin/console doctrine:migrations:migrate
+$ yarn encore dev
 ```
 Run:
 ```sh
