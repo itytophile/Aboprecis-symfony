@@ -40,7 +40,7 @@ class User implements UserInterface
     private $password;
 
     /**
-     * @ORM\OneToMany(targetEntity=Sub::class, mappedBy="id_user", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Sub::class, mappedBy="user", orphanRemoval=true)
      */
     private $subs;
 
@@ -134,7 +134,7 @@ class User implements UserInterface
     {
         if (!$this->subs->contains($sub)) {
             $this->subs[] = $sub;
-            $sub->setIdUser($this);
+            $sub->setUser($this);
         }
 
         return $this;
@@ -145,8 +145,8 @@ class User implements UserInterface
         if ($this->subs->contains($sub)) {
             $this->subs->removeElement($sub);
             // set the owning side to null (unless already changed)
-            if ($sub->getIdUser() === $this) {
-                $sub->setIdUser(null);
+            if ($sub->getUser() === $this) {
+                $sub->setUser(null);
             }
         }
 
