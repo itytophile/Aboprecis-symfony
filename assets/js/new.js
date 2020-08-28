@@ -1,24 +1,11 @@
 let isFirst;
-/*
-socket
-  .on('channels', channels => {
-    console.log("Answer received from server");
-    isFirst = true;
-    channels.forEach(channel => {
-      const column = document.createElement('div');
-      column.classList.add('column');
-
-      const card = getCard(channel);
-
-      column.appendChild(card);
-
-      columns.appendChild(column);
-    });
-    form.remove();
-  });
-*/
 
 buttonChannel.onclick = sendChannel;
+
+let jokeText = 
+'The form was not valid, attack attempt\
+ detected. A recording of your actions has been\
+ sent to the nearest Police station (joke).';
 
 function sendChannel() {
   buttonChannel.classList.add('is-loading');
@@ -28,8 +15,29 @@ function sendChannel() {
     body: formData,
   })
   .then(res => res.json())
-  .then(json => console.log(json))
+  .then(json => {
+    if(json.isValid) {
+      processChannels(json.channels);
+    } else {
+      console.log(jokeText);
+    }
+  })
   .catch(err => console.log(err));
+}
+
+function processChannels(channels) {
+  isFirst = true;
+  channels.forEach(channel => {
+    const column = document.createElement('div');
+    column.classList.add('column');
+
+    const card = getCard(channel);
+
+    column.appendChild(card);
+
+    columns.appendChild(column);
+  });
+  firstForm.remove();
 }
 
 function getCard(channel) {

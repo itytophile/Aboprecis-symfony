@@ -4,10 +4,11 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
 use App\Form\ChannelNameType;
+use App\Service\YoutubeApi;
+use Google_Client;
 
 class ProfileController extends AbstractController
 {
@@ -35,16 +36,21 @@ class ProfileController extends AbstractController
     /**
      * @Route("/profile/new/get", name="getChannel", methods={"POST"})
      */
-    public function getChannel(Request $request)
+    public function getChannel(Request $request, YoutubeApi $api)
     {
+
         $form = $this->createForm(ChannelNameType::class);
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
-            return $this->json(['validForm' => 'true', 'textReceived' => $data['channel_name']]);
+            $channelName = $data['channel_name'];
+            return $this->json([
+                'isValid' => true,
+                'channels' => $api->getChannelsByName($channelName, 3),
+            ]);
         }
 
-        return $this->json(['validForm' => 'false']);
+        return $this->json(['isValid' => false]);
     }
 }
