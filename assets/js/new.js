@@ -1,0 +1,109 @@
+let isFirst;
+/*
+socket
+  .on('channels', channels => {
+    console.log("Answer received from server");
+    isFirst = true;
+    channels.forEach(channel => {
+      const column = document.createElement('div');
+      column.classList.add('column');
+
+      const card = getCard(channel);
+
+      column.appendChild(card);
+
+      columns.appendChild(column);
+    });
+    form.remove();
+  });
+*/
+
+buttonChannel.onclick = sendChannel;
+
+function sendChannel() {
+  buttonChannel.classList.add('is-loading');
+  let formData = new FormData(firstForm);
+  fetch('/profile/new/get', {
+    method: 'POST',
+    body: formData,
+  })
+  .then(res => res.json())
+  .then(json => console.log(json))
+  .catch(err => console.log(err));
+}
+
+function getCard(channel) {
+  const card = document.createElement('div');
+  card.classList.add('card');
+  const header = getHeader(channel);
+  card.appendChild(header);
+  const cardImage = getCardImage(channel);
+  card.appendChild(cardImage);
+  const cardContent = getCardContent(channel);
+  card.appendChild(cardContent);
+  return card;
+}
+
+function getCardContent(channel) {
+  const cardContent = document.createElement('div');
+  cardContent.classList.add('card-content');
+  const content = document.createElement('div');
+  content.classList.add('content');
+  content.textContent = channel.description;
+
+  const contentButton = document.createElement('div');
+  contentButton.classList.add('content');
+  const button = getButton(channel);
+
+  contentButton.appendChild(button);
+  cardContent.appendChild(content);
+  cardContent.appendChild(contentButton);
+  return cardContent;
+}
+
+function getButton(channel) {
+  const button = document.createElement('button');
+  button.classList.add('button');
+  if (isFirst) {
+    button.classList.add('is-success');
+    isFirst = false;
+  }
+  button.textContent = 'Choose';
+  button.onclick = () => {
+    inputChannelId.value = channel.id;
+    columns.remove();
+    title.textContent = channel.title;
+    title.href = channel.url;
+    finalForm.removeAttribute('hidden');
+  };
+  return button;
+}
+
+function getCardImage(channel) {
+  const cardImage = document.createElement('div');
+  cardImage.classList.add('card-image');
+  const a = document.createElement('a');
+  a.href = channel.url;
+  a.rel = 'noopener noreferrer';
+  a.target = '_blank';
+  const figure = document.createElement('figure');
+  figure.classList.add('image');
+  figure.classList.add('is-64x64');
+  const img = document.createElement('img');
+  img.src = channel.img;
+  img.alt = "Channel image";
+  figure.appendChild(img);
+  a.appendChild(figure);
+  cardImage.appendChild(a);
+  return cardImage;
+}
+
+function getHeader(channel) {
+  const header = document.createElement('header');
+  header.classList.add('card-header');
+  const p = document.createElement('p');
+  p.classList.add('card-header-title');
+  p.textContent = channel.title;
+  header.appendChild(p);
+  return header;
+}
