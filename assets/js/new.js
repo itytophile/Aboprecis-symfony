@@ -7,6 +7,13 @@ let jokeText =
  detected. A recording of your actions has been\
  sent to the nearest Police station (joke).';
 
+ window.onkeydown = event => {
+   if(event.keyCode == 13) {
+     event.preventDefault();
+     return false;
+   }
+ }
+
 function sendChannel() {
   buttonChannel.classList.add('is-loading');
   let formData = new FormData(firstForm);
