@@ -1,19 +1,55 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}My subs{% endblock %}
+{% block title %}My subs
+{% endblock %}
 
 {% block body %}
 	<section class="hero is-fullheight-with-navbar">
-        <div class="hero-body">
-            <div class="container has-text-centered">
-                <h1 class="title">You don't have any subs!</h1>
-                <a class="button is-link" href="{{ path('profile') }}">
-                    <span class="icon is-small">
-                        <i class="fab fa-accessible-icon"></i>
-                    </span>
-                    <span>Your profile</span>
-                </a>
-            </div>
-        </div>
-    </section>
+		<div class="hero-body">
+			<div class="container has-text-centered">
+				{% if arrayOfResults|length > 0 %}
+					{% for results in arrayOfResults %}
+						<h1 class="title is-1">From
+							{{ results[0].snippet.channelTitle }}</h1>
+						<div class="columns">
+							{% for res in results %}
+								<div class="column">
+									<div class="card">
+										<a href="https://youtu.be/{{ res.id.videoId }}">
+											<div class="card-image">
+												<figure class="image is-4by3">
+													<img src="{{ res.snippet.thumbnails.high.url }}" alt="Placeholder image">
+												</figure>
+											</div>
+										</a>
+										<div class="card-content">
+											<div class="media">
+												<div class="media-content">
+													<p class="title is-4">{{ he_decode(res.snippet.title) }}</p>
+												</div>
+											</div>
+
+											<div class="content">
+												{{ res.snippet.description }}<br><strong>
+													<time datetime="{{ res.snippet.publishedAt }}">{{ date(res.snippet.publishedAt).format('Y-m-d H:i:s') }}</time>
+												</strong>
+											</div>
+										</div>
+									</div>
+								</div>
+							{% endfor %}
+						</div>
+					{% endfor %}
+				{% else %}
+					<h1 class="title">You don't have any subs!</h1>
+					<a class="button is-link" href="{{ path('profile') }}">
+						<span class="icon is-small">
+							<i class="fab fa-accessible-icon"></i>
+						</span>
+						<span>Your profile</span>
+					</a>
+				{% endif %}
+			</div>
+		</div>
+	</section>
 {% endblock %}

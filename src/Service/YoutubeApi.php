@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Entity\Sub;
 use Google_Client;
 use Google_Service_YouTube;
 
@@ -43,5 +44,20 @@ class YoutubeApi {
         }
 
         return $channels;
+    }
+
+    function getVideosBySub(Sub $sub, int $maxResults)
+    {
+        $params = [
+            'type' => 'video',
+            'order' => 'date',
+            'channelId' => $sub->getChannel(),
+            'q' => $sub->getKeywords(),
+            'maxResults' => $maxResults,
+        ];
+
+        $results = $this->service->search->listSearch('snippet', $params);
+
+        return $results;
     }
 }

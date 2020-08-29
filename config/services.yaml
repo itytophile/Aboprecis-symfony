@@ -34,3 +34,5 @@ services:
     App\Service\YoutubeApi:
         arguments:
             - '../googleapi.json'
+    App\Twig\AppExtension:
+        tags: ['twig.extension']
