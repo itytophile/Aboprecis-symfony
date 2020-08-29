@@ -24,7 +24,7 @@
                         <div class="content">{{ sub.getKeywords() }}</div>
                     </div>
                     <footer class="card-footer">
-                        <a class="card-footer-item">Delete</a>
+                        <a class="card-footer-item" href="{{ path('delete', { 'id': sub.getId() }) }}">Delete</a>
                     </footer>
                 </div>
             </div>

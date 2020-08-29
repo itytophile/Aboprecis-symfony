@@ -87,4 +87,22 @@ class ProfileController extends AbstractController
 
         return $this->json(['isValid' => false]);
     }
+
+    /**
+     * @Route("/profile/delete/{id}", name="delete")
+     */
+    public function delete($id) {
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $subToDelete = $entityManager->getRepository(Sub::class)->find($id);
+        $user = $this->getUser();
+
+        // We check if the user is the owner of the sub he wants to delete
+        if($subToDelete && $subToDelete->getUser()->getId() == $user->getId()) {
+            $entityManager->remove($subToDelete);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('profile');
+    }
 }
