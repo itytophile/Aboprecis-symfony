@@ -6,17 +6,19 @@
 {% block body %}
 <section class="section">
 	<div class="content">
+
 		{{ form_start(form, { 'attr': {
-                'id': 'firstForm',
-            } }) }}
+			'id': 'firstForm',
+		} }) }}
+
 		<div class="field">
 			<div class="control">
 				{{ form_widget(form.channel_name, { 'attr': {
-                        'id': 'inputChannel',
-                        'class': 'input',
-                        'placeholder': 'Channel\'s name',
-                        'autocomplete': 'off',
-                    } }) }}
+					'id': 'inputChannel',
+					'class': 'input',
+					'placeholder': 'Channel\'s name',
+					'autocomplete': 'off',
+                } }) }}
 				</div>
 			</div>
 			<div class="field">
@@ -24,25 +26,43 @@
 					<button id="buttonChannel" type="button" class="button is-primary">Search</button>
 				</div>
 			</div>
+
 			{{ form_end(form) }}
+
 			<div id="columns" class="columns"></div>
-			<form id="finalForm" action="/profile/new" method="POST" hidden>
-				<div class="notification">
-					You have chosen
-					<a id="title" rel="noopener noreferrer" target="_blank"></a>.
+
+			{{ form_start(formSub, { 'attr': {
+				'id': 'finalForm',
+				'hidden': 'on',
+			} }) }}
+
+			<div class="notification">
+				You have chosen
+				<a id="title" rel="noopener noreferrer" target="_blank"></a>.
+			</div>
+			{{ form_widget(formSub.channel, { 'attr': {
+				'hidden': 'on',
+			} }) }}
+			{{ form_widget(formSub.title, { 'attr': {
+				'hidden': 'on',
+			} }) }}
+			<div class="field">
+				<div class="control">
+					{{ form_widget(formSub.keywords, { 'attr': {
+						'class': 'input',
+						'placeholder': 'Keywords',
+						'autocomplete': 'off',
+					} }) }}
 				</div>
-				<input id="inputChannelId" type="text" name="id" hidden>
-				<div class="field">
-					<div class="control">
-						<input type="text" class="input" name="q" placeholder="Keywords" autocomplete="off">
-					</div>
+			</div>
+			<div class="field">
+				<div class="control">
+					<input type="submit" class="button is-primary" value="Save">
 				</div>
-				<div class="field">
-					<div class="control">
-						<input type="submit" class="button is-primary" value="Save">
-					</div>
-				</div>
-			</form>
+			</div>
+
+			{{ form_end(formSub) }}
+
 		</div>
 	</section>
 {% endblock %}

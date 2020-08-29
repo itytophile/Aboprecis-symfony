@@ -2,11 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Sub;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
 use App\Form\ChannelNameType;
+use App\Form\SubType;
 use App\Service\YoutubeApi;
 use Google_Client;
 
@@ -25,12 +27,44 @@ class ProfileController extends AbstractController
     }
 
     /**
-     * @Route("/profile/new", name="new")
+     * @Route("/profile/new", name="new", methods={"GET"})
      */
     public function new()
     {
         $form = $this->createForm(ChannelNameType::class);
-        return $this->render('profile/new.html.twig', ['form' => $form->createView()]);
+        $formSub = $this->createForm(SubType::class, null, [
+            'action' => $this->generateUrl('newPost')
+        ]);
+
+        return $this->render('profile/new.html.twig', [
+            'form' => $form->createView(),
+            'formSub' => $formSub->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/profile/new", name="newPost", methods={"POST"})
+     */
+    public function newPost(Request $request)
+    {
+        $sub = new Sub();
+
+        $form = $this->createForm(SubType::class, $sub);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+            // You have to add the user manually to the sub instance,
+            // the form doesn't handle it
+            $sub->setUser($this->getUser());
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($sub);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('profile');
+        }
+
+        return $this->json([ 'isValid' => false ]);
     }
 
     /**

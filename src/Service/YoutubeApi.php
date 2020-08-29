@@ -35,6 +35,7 @@ class YoutubeApi {
         foreach($results->getItems() as $item) {
             $snippet = $item->snippet;
             $channels[] = [
+                'id' => $snippet->channelId,
                 'url' => 'https://www.youtube.com/channel/'.$snippet->channelId,
                 'img' => $snippet->thumbnails->default->url,
                 'title' => $snippet->title,

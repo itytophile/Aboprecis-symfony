@@ -85,7 +85,10 @@ function getButton(channel) {
   }
   button.textContent = 'Choose';
   button.onclick = () => {
-    inputChannelId.value = channel.id;
+    // You can put what you want here I don't care
+    // No motivation to do server-side checking
+    sub_channel.value = channel.id;
+    sub_title.value = channel.title;
     columns.remove();
     title.textContent = channel.title;
     title.href = channel.url;
